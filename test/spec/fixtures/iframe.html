@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+  </head>
+  <body>
+    <script src="../../../lib/PostMessageCommunicator.js"></script>
+    <script type="text/javascript">
+      var Obj = function(a, b) {
+        this.a = a;
+        this.b = b; 
+        this.sendables = ['submit', 'validate'];
+      };
+      Obj.prototype.set_communicator = function(communicator) {
+        this.communicator = communicator;
+      };
+      Obj.prototype.remote_submit = function() {
+        this.submit({foo: 'bar'});
+      };
+      var pmc = new PostMessageCommunicator();
+    </script>
+  </body>
+</html>
