@@ -14,7 +14,7 @@ describe('PostMessageCommunicator', function() {
       $('iframe').remove();
     });
     it('should create be able to instantiate an object in another iframe, and exchange messages with it', function() {
-      var sender = new this.Constructor(['remote_submit', 'instantiate']);
+      var sender = new this.Constructor(['remote_submit']);
       var spy = spyOn(sender, 'submit');
       var loaded = false;
       waitsFor(function() {
@@ -29,7 +29,11 @@ describe('PostMessageCommunicator', function() {
           sender: sender,
           target_origin: 'http://localhost'
         });
-        sender.instantiate('Obj', 'http://localhost', [1,2]);
+        communicator.instantiate({
+          constructor_name: 'Obj',
+          target_origin: 'http://localhost',
+          args: [1,2]
+        });
         waits(50);
         runs(function() {
           sender.remote_submit();
@@ -42,7 +46,7 @@ describe('PostMessageCommunicator', function() {
       });
     });
     it('should fail to exchange messages if target_origin does not match', function() {
-      var sender = new this.Constructor(['remote_submit', 'instantiate']);
+      var sender = new this.Constructor(['remote_submit']);
       var spy = spyOn(sender, 'submit');
       var loaded = false;
       waitsFor(function() {
@@ -57,7 +61,11 @@ describe('PostMessageCommunicator', function() {
           sender: sender,
           target_origin: 'http://google.com'
         });
-        sender.instantiate('Obj', 'http://localhost', [1,2]);
+        communicator.instantiate({
+          constructor_name: 'Obj',
+          target_origin: 'http://localhost',
+          args: [1,2]
+        });
         waits(50);
         runs(function() {
           sender.remote_submit();
