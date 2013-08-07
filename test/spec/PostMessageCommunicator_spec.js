@@ -5,9 +5,6 @@ describe('PostMessageCommunicator', function() {
       this.Constructor = function(sendables) {
         this.sendables = sendables;
       };
-      this.Constructor.prototype.set_communicator = function(c) {
-        this.communicator = c;
-      };
       this.Constructor.prototype.submit = function() {};
     });
     afterEach(function() {
