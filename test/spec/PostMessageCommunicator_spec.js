@@ -24,7 +24,7 @@ describe('PostMessageCommunicator', function() {
         var communicator = new PostMessageCommunicator({
           recipient: $('iframe').get(0).contentWindow,
           sender: sender,
-          target_origin: 'http://localhost'
+          target_origin: window.location.protocol + '//' + window.location.host
         });
         communicator.set_remote_recipient();
         waits(50);
@@ -64,11 +64,11 @@ describe('PostMessageCommunicator', function() {
         var communicator = new PostMessageCommunicator({
           recipient: $('iframe').get(0).contentWindow,
           sender: sender,
-          target_origin: 'http://localhost'
+          target_origin: window.location.protocol + '//' + window.location.host
         });
         communicator.instantiate({
           constructor_name: 'Obj',
-          target_origin: 'http://localhost',
+          target_origin: window.location.protocol + '//' + window.location.host,
           args: [1,2]
         });
         waits(50);
@@ -100,7 +100,7 @@ describe('PostMessageCommunicator', function() {
         });
         communicator.instantiate({
           constructor_name: 'Obj',
-          target_origin: 'http://localhost',
+          target_origin: window.location.protocol + '//' + window.location.host,
           args: [1,2]
         });
         waits(50);

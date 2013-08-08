@@ -19,7 +19,7 @@
       var sender = new Obj(1, 2);
       var pmc = new PostMessageCommunicator({
         sender: sender,
-        target_origin: 'http://localhost'
+        target_origin: window.location.protocol + '//' + window.location.host
       });
     </script>
   </body>
