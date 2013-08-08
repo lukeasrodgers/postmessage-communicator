@@ -113,5 +113,37 @@ describe('PostMessageCommunicator', function() {
         });
       });
     });
+    it('should fail to exchange messages if origin is not whitelisted', function() {
+      var sender = new this.Constructor(['remote_submit']);
+      var spy = spyOn(sender, 'submit');
+      var loaded = false;
+      waitsFor(function() {
+        $('iframe').load(function() {
+          loaded = true;
+        });
+        return loaded;
+      }, 'Failed to load iFrame', 500);
+      runs(function() {
+        var communicator = new PostMessageCommunicator({
+          recipient: $('iframe').get(0).contentWindow,
+          sender: sender,
+          target_origin: window.location.protocol + '//' + window.location.host,
+          origin_whitelist: ['http://foobar']
+        });
+        communicator.instantiate({
+          constructor_name: 'Obj',
+          target_origin: window.location.protocol + '//' + window.location.host,
+          args: [1,2]
+        });
+        waits(50);
+        runs(function() {
+          sender.remote_submit();
+        });
+        waits(50);
+        runs(function() {
+          expect(spy).not.toHaveBeenCalled();
+        });
+      });
+    });
   });
 });
