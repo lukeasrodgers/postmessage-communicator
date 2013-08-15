@@ -1,7 +1,7 @@
 describe('PostMessageCommunicator', function() {
   describe('working with an existing remote object', function() {
     beforeEach(function() {
-      $('body').append('<iframe src="spec/fixtures/iframe_instantiated.html"></iframe>');  
+      $('body').append('<iframe src="spec/fixtures/iframe_instantiated.html?cachebust='+ new Date().getTime() +'"></iframe>');  
       this.Constructor = function(sendables) {
         this.sendables = sendables;
       };
@@ -41,7 +41,7 @@ describe('PostMessageCommunicator', function() {
   });
   describe('instantiating a remote object', function() {
     beforeEach(function() {
-      $('body').append('<iframe src="spec/fixtures/iframe.html"></iframe>');  
+      $('body').append('<iframe src="spec/fixtures/iframe.html?cachebust='+ new Date().getTime() +'"></iframe>');  
       this.Constructor = function(sendables) {
         this.sendables = sendables;
       };
