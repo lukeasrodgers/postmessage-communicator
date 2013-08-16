@@ -38,6 +38,7 @@ describe('PostMessageCommunicator', function() {
       append_iframe('iframe_instantiated');
     });
     afterEach(function() {
+      this.communicator.dispose();
       $('iframe').remove();
     });
     it('should be able to communicate with an instantiated communicator/sender pair', function() {
@@ -46,8 +47,8 @@ describe('PostMessageCommunicator', function() {
       loaded = false;
       waitsFor(iframe_load, 'Failed to load iFrame', 500);
       runs(function() {
-        var communicator = communicator_factory(sender);
-        communicator.set_remote_recipient();
+        this.communicator = communicator_factory(sender);
+        this.communicator.set_remote_recipient();
         waits(50);
         runs(function() {
           sender.remote_submit();
@@ -65,6 +66,7 @@ describe('PostMessageCommunicator', function() {
       append_iframe('iframe_instantiated_no_whitelist');
     });
     afterEach(function() {
+      this.communicator.dispose();
       $('iframe').remove();
     });
     it('should not be able to communicate with the remote object, because it is not whitelisted', function() {
@@ -73,8 +75,8 @@ describe('PostMessageCommunicator', function() {
       loaded = false;
       waitsFor(iframe_load, 'Failed to load iFrame', 500);
       runs(function() {
-        var communicator = communicator_factory(sender);
-        communicator.set_remote_recipient();
+        this.communicator = communicator_factory(sender);
+        this.communicator.set_remote_recipient();
         waits(50);
         runs(function() {
           sender.remote_submit();
@@ -91,6 +93,7 @@ describe('PostMessageCommunicator', function() {
       append_iframe('iframe');
     });
     afterEach(function() {
+      this.communicator.dispose();
       $('iframe').remove();
     });
     it('should be able to instantiate an object in another iframe, and exchange messages with it', function() {
@@ -99,8 +102,8 @@ describe('PostMessageCommunicator', function() {
       loaded = false;
       waitsFor(iframe_load, 'Failed to load iFrame', 500);
       runs(function() {
-        var communicator = communicator_factory(sender);
-        instantiate(communicator);
+        this.communicator = communicator_factory(sender);
+        instantiate(this.communicator);
         waits(50);
         runs(function() {
           sender.remote_submit();
@@ -118,8 +121,8 @@ describe('PostMessageCommunicator', function() {
       loaded = false;
       waitsFor(iframe_load, 'Failed to load iFrame', 500);
       runs(function() {
-        var communicator = communicator_factory(sender);
-        instantiate(communicator);
+        this.communicator = communicator_factory(sender);
+        instantiate(this.communicator);
         waits(50);
         runs(function() {
           sender.remote_execute(function() { this.remote_submit(); });
@@ -138,8 +141,8 @@ describe('PostMessageCommunicator', function() {
       loaded = false;
       waitsFor(iframe_load, 'Failed to load iFrame', 500);
       runs(function() {
-        var communicator = communicator_factory(sender);
-        instantiate(communicator);
+        this.communicator = communicator_factory(sender);
+        instantiate(this.communicator);
         waits(50);
         runs(function() {
           sender.remote_execute(function(a, b) { this.arbitrary(a, b); }, 5, 6);
@@ -158,8 +161,8 @@ describe('PostMessageCommunicator', function() {
       loaded = false;
       waitsFor(iframe_load, 'Failed to load iFrame', 500);
       runs(function() {
-        var communicator = communicator_factory(sender);
-        instantiate(communicator);
+        this.communicator = communicator_factory(sender);
+        instantiate(this.communicator);
         var ajax_url = 'junk.html';
         waits(50);
         runs(function() {
@@ -178,8 +181,8 @@ describe('PostMessageCommunicator', function() {
       loaded = false;
       waitsFor(iframe_load, 'Failed to load iFrame', 500);
       runs(function() {
-        var communicator = communicator_factory(sender, 'http://google.com');
-        instantiate(communicator);
+        this.communicator = communicator_factory(sender, 'http://google.com');
+        instantiate(this.communicator);
         waits(50);
         runs(function() {
           sender.remote_submit();
@@ -196,8 +199,8 @@ describe('PostMessageCommunicator', function() {
       loaded = false;
       waitsFor(iframe_load, 'Failed to load iFrame', 500);
       runs(function() {
-        var communicator = communicator_factory(sender, undefined, ['http://foobar']);
-        instantiate(communicator);
+        this.communicator = communicator_factory(sender, undefined, ['http://foobar']);
+        instantiate(this.communicator);
         waits(50);
         runs(function() {
           sender.remote_submit();
