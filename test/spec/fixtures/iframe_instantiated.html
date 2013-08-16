@@ -19,7 +19,7 @@
       var sender = new Obj(1, 2);
       var pmc = new PostMessageCommunicator({
         sender: sender,
-        origin_whitelist: ['http://localhost']
+        origin_whitelist: [window.location.protocol + '//' + window.location.host]
       });
     </script>
   </body>
